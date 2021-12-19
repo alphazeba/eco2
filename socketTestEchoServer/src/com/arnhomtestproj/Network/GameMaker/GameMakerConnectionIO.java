@@ -10,8 +10,8 @@ import java.net.Socket;
 
 public class GameMakerConnectionIO implements ConnectionIO {
 
-    private PrintWriter out;
-    private BufferedReader in;
+    private final PrintWriter out;
+    private final BufferedReader in;
     public GameMakerConnectionIO(Socket socket) throws IOException {
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader( new InputStreamReader(socket.getInputStream()) );
@@ -28,12 +28,18 @@ public class GameMakerConnectionIO implements ConnectionIO {
         try{
             result = in.readLine();
             if(result != null){ // if we got something, then we also need to skip past the 0 byte that gamemaker adds.
-                in.skip(1);
+                // clean out the null characters in the string.
+                result = removeNullCharacters(result);
             }
         }
         catch(IOException e){
             System.out.println("ERROR: " + e.getMessage());
         }
         return result;
+    }
+
+    private final String nullCharacterString = String.valueOf((char)0);
+    private String removeNullCharacters(String input){
+        return input.replaceAll( nullCharacterString,"");
     }
 }

@@ -1,0 +1,11 @@
+
+{
+    "test": "this is a value",
+    "hello": "there",
+    "arrayThing": [
+        "one",
+        "two", "three",
+        "four"
+    ]
+
+}

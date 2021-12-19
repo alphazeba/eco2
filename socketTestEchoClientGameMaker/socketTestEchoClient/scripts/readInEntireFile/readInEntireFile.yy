@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "network",
-    "path": "folders/Scripts/network.yy",
+    "name": "file",
+    "path": "folders/Scripts/file.yy",
   },
   "resourceVersion": "1.0",
-  "name": "listenToSocket",
+  "name": "readInEntireFile",
   "tags": [],
   "resourceType": "GMScript",
 }

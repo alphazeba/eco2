@@ -14,7 +14,7 @@ public class EchoHandler implements ConnectionMessageHandler {
     @Override
     public void handleMessage(String message) {
         // echoes it back;
-        System.out.println("recieved from gamemaker: " + message);
+        System.out.println("received from gamemaker: " + message);
         io.println(message);
     }
 }

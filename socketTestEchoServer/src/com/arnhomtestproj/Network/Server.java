@@ -4,80 +4,91 @@ import com.sun.tools.internal.xjc.ConsoleErrorReporter;
 
 import java.net.*;
 import java.io.*;
+import java.sql.SQLSyntaxErrorException;
 import java.util.List;
 import java.util.Vector;
 
 public class Server {
 
-    private int listeningPort;
+    private final int listeningPort;
     private Thread listeningThread;
-    private ConnectionBuilder connectionBuilder;
+    private final ConnectionBuilder connectionBuilder;
     private List<Connection> connections = new Vector<>();
+    private final int listenTimeoutSeconds = 5;
+    private boolean keepListening = false;
 
     public Server(int port, ConnectionBuilder connectionBuilder){
         listeningPort = port;
         this.connectionBuilder = connectionBuilder;
     }
 
+    public boolean isListening(){
+        return listeningThread != null && listeningThread.isAlive();
+    }
+
+    public boolean listeningThreadIsStopping(){
+        return keepListening == false;
+    }
+
     public void startListening(){
-        Thread listeningThread = new Thread(() ->{
-            while(true) {
-                try {
-                    ServerSocket serverSocket = new ServerSocket(listeningPort);
-                    Socket clientSocket = serverSocket.accept();
-                    Connection connection = connectionBuilder.build(clientSocket);
-                    connections.add(connection);
-                } catch (IOException e) {
-                    System.out.println("Exception caught when trying to listen on port "
-                            + listeningPort + " or listening for a connection");
-                    System.out.println(e.getMessage());
+        if(this.isListening()){
+            System.out.println("cannot start listening as the server is already listening");
+            if(listeningThreadIsStopping()){
+                System.out.println("... but the listening thread is attempting to stop.  Will keep the thread from stopping");
+                keepListening = true;
+            }
+            else{
+                System.out.println("and the listening thread does not plan to stop.");
+            }
+            return;
+        }
+        keepListening = true;
+        listeningThread = new Thread(() ->{
+            try {
+                ServerSocket serverSocket = new ServerSocket(listeningPort);
+                serverSocket.setSoTimeout(listenTimeoutSeconds * 1000);
+                System.out.println("Began listening on port " + listeningPort);
+
+                while (keepListening) {
+                    try {
+                        Socket clientSocket = serverSocket.accept();
+                        Connection connection = connectionBuilder.build(clientSocket);
+                        connections.add(connection);
+                    } catch (SocketTimeoutException e) {
+                        if (!keepListening) {
+                            System.out.println("socket timeout reached and keeplistening is false. Will stop listening.");
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Exception caught when trying to listen on port "
+                                + listeningPort + " or listening for a connection");
+                        System.out.println(e.getMessage());
+                    }
                 }
             }
+            catch(IOException e){
+                System.out.println("Exception caught when trying to open a server socket on port "
+                        + listeningPort);
+                System.out.println(e.getMessage());
+            }
+            System.out.println("Listening thread has ended.");
         });
         listeningThread.start();
     }
 
     public void stopListening(){
-
+        System.out.println("received command to stop listening. The thread will exit once the timeout is reached.");
+        keepListening = false;
     }
 
-
-    public static void main(String[] args) throws IOException {
-
-        if (args.length != 1) {
-            System.err.println("Usage: java EchoServer <port number>");
-            System.exit(1);
+    public void stopListeningAndWaitForThreadToExit(){
+        stopListening();
+        System.out.println("Now wait for the thread to die.");
+        try {
+            listeningThread.join();
         }
-
-        int portNumber = Integer.parseInt(args[0]);
-
-        System.out.println("listening on port: " + portNumber);
-
-        try (
-                ServerSocket serverSocket =
-                        new ServerSocket(portNumber);
-                Socket clientSocket = serverSocket.accept();
-                PrintWriter out =
-                        new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(clientSocket.getInputStream()));
-        ) {
-            System.out.println("got a connection");
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                // now get rid of extra end lines
-                in.skip(1);
-                System.out.println("received: " + inputLine);
-                out.println(inputLine);
-            }
-        } catch (IOException e) {
-            System.out.println("Exception caught when trying to listen on port "
-                    + portNumber + " or listening for a connection");
+        catch(Exception e){
+            System.out.println("Something went wrong");
             System.out.println(e.getMessage());
         }
     }
 }
-
-
-
-

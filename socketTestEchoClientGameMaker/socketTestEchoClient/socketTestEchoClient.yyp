@@ -1,12 +1,15 @@
 {
   "resources": [
-    {"id":{"name":"stringToBuffer","path":"scripts/stringToBuffer/stringToBuffer.yy",},"order":2,},
-    {"id":{"name":"controller","path":"objects/controller/controller.yy",},"order":0,},
-    {"id":{"name":"listenToSocket","path":"scripts/listenToSocket/listenToSocket.yy",},"order":3,},
-    {"id":{"name":"cleanStringForSending","path":"scripts/cleanStringForSending/cleanStringForSending.yy",},"order":4,},
-    {"id":{"name":"networkSendString","path":"scripts/networkSendString/networkSendString.yy",},"order":1,},
-    {"id":{"name":"connectToServer","path":"scripts/connectToServer/connectToServer.yy",},"order":0,},
-    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},
+    {"id":{"name":"stringToBuffer","path":"scripts/stringToBuffer/stringToBuffer.yy",},"order":0,},
+    {"id":{"name":"jsonInteractionTestController","path":"objects/jsonInteractionTestController/jsonInteractionTestController.yy",},"order":1,},
+    {"id":{"name":"networkingTestController","path":"objects/networkingTestController/networkingTestController.yy",},"order":0,},
+    {"id":{"name":"listenToSocket","path":"scripts/listenToSocket/listenToSocket.yy",},"order":2,},
+    {"id":{"name":"cleanStringForSending","path":"scripts/cleanStringForSending/cleanStringForSending.yy",},"order":0,},
+    {"id":{"name":"fileTest","path":"rooms/fileTest/fileTest.yy",},"order":1,},
+    {"id":{"name":"networkSendString","path":"scripts/networkSendString/networkSendString.yy",},"order":3,},
+    {"id":{"name":"connectToServer","path":"scripts/connectToServer/connectToServer.yy",},"order":1,},
+    {"id":{"name":"readInEntireFile","path":"scripts/readInEntireFile/readInEntireFile.yy",},"order":0,},
+    {"id":{"name":"networkingTest","path":"rooms/networkingTest/networkingTest.yy",},"order":0,},
   ],
   "Options": [
     {"name":"Linux","path":"options/linux/options_linux.yy",},
@@ -23,7 +26,8 @@
     "children": [],
   },
   "RoomOrderNodes": [
-    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"roomId":{"name":"fileTest","path":"rooms/fileTest/fileTest.yy",},},
+    {"roomId":{"name":"networkingTest","path":"rooms/networkingTest/networkingTest.yy",},},
   ],
   "Folders": [
     {"folderPath":"folders/Sprites.yy","order":1,"resourceVersion":"1.0","name":"Sprites","tags":[],"resourceType":"GMFolder",},
@@ -40,6 +44,9 @@
     {"folderPath":"folders/Animation Curves.yy","order":12,"resourceVersion":"1.0","name":"Animation Curves","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Notes.yy","order":13,"resourceVersion":"1.0","name":"Notes","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Extensions.yy","order":14,"resourceVersion":"1.0","name":"Extensions","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Scripts/network.yy","order":5,"resourceVersion":"1.0","name":"network","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Scripts/string.yy","order":6,"resourceVersion":"1.0","name":"string","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Scripts/file.yy","order":7,"resourceVersion":"1.0","name":"file","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},
