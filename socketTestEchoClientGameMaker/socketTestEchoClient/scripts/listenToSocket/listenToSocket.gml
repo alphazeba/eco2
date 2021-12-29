@@ -8,7 +8,7 @@ function listenToSocket(socket){
 	    var receivedData = buffer_read(t_buffer, buffer_string );
 	    
 		show_debug_message("received the message: " + receivedData);
-		
+		return receivedData;
 	}
-	
+	return pointer_null;
 }

@@ -4,7 +4,6 @@ import com.sun.tools.internal.xjc.ConsoleErrorReporter;
 
 import java.net.*;
 import java.io.*;
-import java.sql.SQLSyntaxErrorException;
 import java.util.List;
 import java.util.Vector;
 

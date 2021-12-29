@@ -6,6 +6,6 @@
         "one",
         "two", "three",
         "four"
-    ]
-
+    ],
+    "number" : 0
 }
