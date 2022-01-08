@@ -17,3 +17,25 @@ current goals
 -- i think that the basic event system necessary to make the grass layer works is done.
 -- now i just need to make a function for drawing the grass layer and then hook up the main thing to continuously
   - ask the layers for their decisions and then handle the decisions.
+
+
+-- goal is to make a way for the layers to handle global queries such as "does this address exist."
+  - the layerManager is capable of handling this question, but there is no way for the layers
+    to access  the layer manager right now.
+
+-- also need to plan for how the layers will be passed a context.
+
+-- may want to consider an event category of "attemptTo" events.
+   - ex: an "attemptToPlant" would enforce whether the action is possible and then generate a planted event.
+   - the planted event does not need to check whether the event is possible because it is assumed it must be possible.
+   - this would also allow keeping the legality logic in the same class as the one generating the event.
+   - The bunny ai may generate an "attempt to eat grass" but the bunny class would handle the "attemptToEat" event
+     and verify whether or not the grass were actually there to eat.
+     - actually this is an interesting case, becasue it shoudl probably be the grass checking whether or not it exists.
+     - maybe like this.
+        bunny handles attemptToEat, generating the ate event if it succeeds
+            edge case: multiple bunnies attempt to eat the same grass. this is possible multiple eat events generated.
+        grass handles the ate event and generates the digested event if it succeeds (the eat action actually takes energy not gives it)
+            edge case: multiple eat targetting the same grass, only the first eat generates a digested event.
+            - because of this we may have to scramble the eat events.
+        bunny handles the digested event. ( the bunny handling this actually recieves energy).

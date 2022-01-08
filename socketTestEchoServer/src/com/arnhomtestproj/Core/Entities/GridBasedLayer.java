@@ -49,4 +49,9 @@ public abstract class GridBasedLayer extends Layer {
         return grid;
     }
 
+    @Override
+    public boolean containsEntity(EntityAddress entityAddress) {
+        Position pos = parseEntityAddress(entityAddress);
+        return grid.hasAValue(pos);
+    }
 }

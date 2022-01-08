@@ -70,4 +70,6 @@ public abstract class Layer {
     protected abstract void plantEntity(Position pos);
     protected abstract void killEntity(EntityAddress entityAddress);
     protected abstract Events handleLayerUniqueEvents(Events events);
+
+    public abstract boolean containsEntity(EntityAddress entityAddress);
 }

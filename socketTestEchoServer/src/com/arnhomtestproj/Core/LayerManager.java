@@ -1,5 +1,6 @@
 package com.arnhomtestproj.Core;
 
+import com.arnhomtestproj.Core.Entities.Data.Address.FullAddress;
 import com.arnhomtestproj.Core.Entities.Data.WorldContext;
 import com.arnhomtestproj.Core.Entities.Layer;
 import com.arnhomtestproj.Core.Events.EventType;
@@ -24,6 +25,17 @@ public class LayerManager {
         layers.add(layer);
     }
 
+    public boolean addressExists(FullAddress address){
+        for(Layer layer: layers){
+            if( address.matches(layer.getLayerAddress())  &&
+                    layer.containsEntity(address.getEntityAddress()))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Events getDecisions(){
         Events decisions = new Events();
         for(Layer layer: layers){
@@ -32,7 +44,7 @@ public class LayerManager {
         return decisions;
     }
 
-    public Events handleEventsOfType(EventsOfType typeEvents){ // TODO replace the other version of this function.
+    public Events handleEventsOfType(EventsOfType typeEvents){ // TODO remove the other version of this function.
         return handleEventsOfType(typeEvents.getType(),typeEvents);
     }
 
