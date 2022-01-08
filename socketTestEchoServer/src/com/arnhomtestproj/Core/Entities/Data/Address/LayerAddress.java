@@ -3,7 +3,7 @@ package com.arnhomtestproj.Core.Entities.Data.Address;
 public class LayerAddress {
     private String id;
     public LayerAddress(){
-        this.id = "dummy test, need to make this random";
+        this.id = "L_"+AddressHelper.generateAddress();
     }
 
 

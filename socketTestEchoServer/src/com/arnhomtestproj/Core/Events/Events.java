@@ -21,4 +21,8 @@ public class Events {
             return;
         events.add(event);
     }
+
+    public boolean isEmpty(){
+        return events.isEmpty();
+    }
 }

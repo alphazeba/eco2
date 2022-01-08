@@ -12,9 +12,8 @@ public class Event {
         this.source = source;
     }
 
-    public void setType(EventType type, FullAddress source) {
-        this.type = type;
-        this.source = source;
+    public EventType getType(){
+        return type;
     }
 
     public boolean is(EventType type){

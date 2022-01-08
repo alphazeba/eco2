@@ -6,7 +6,7 @@ public class EntityAddress {
     String id;
 
     public EntityAddress(){
-        id = "TEST DUMMY ENTITY ADDRESS, please implement something real lel";
+        id = "E_" + AddressHelper.generateAddress();
     }
 
     public EntityAddress(String manualId){

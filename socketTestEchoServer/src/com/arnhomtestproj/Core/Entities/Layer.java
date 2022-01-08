@@ -3,40 +3,50 @@ package com.arnhomtestproj.Core.Entities;
 import com.arnhomtestproj.Core.Entities.Data.Address.EntityAddress;
 import com.arnhomtestproj.Core.Entities.Data.Address.FullAddress;
 import com.arnhomtestproj.Core.Entities.Data.Address.LayerAddress;
+import com.arnhomtestproj.Core.Entities.Data.Grid;
 import com.arnhomtestproj.Core.Entities.Data.Position;
+import com.arnhomtestproj.Core.Entities.Data.WorldContext;
 import com.arnhomtestproj.Core.Events.Event;
 import com.arnhomtestproj.Core.Events.EventType;
 import com.arnhomtestproj.Core.Events.Events;
 import com.arnhomtestproj.Core.Events.SpecificEvents.DiedEvent;
 import com.arnhomtestproj.Core.Events.SpecificEvents.PlantedEvent;
+import sun.lwawt.PlatformEventNotifier;
 
 public abstract class Layer {
-    LayerAddress address;
-    String name;
+    private LayerAddress address;
+    public String name;
 
     public Layer(String name){
         address = new LayerAddress();
         this.name = name;
     }
+    public abstract void setWorldContext(WorldContext world);
 
     public abstract Events getDecisions();
 
-    public Events handleEvent(Event event){
+    public Events handleEventsOfType(EventType type, Events events){
         Events reactions = new Events();
-        if(event.is(EventType.planted)){
-            reactions.add( handlePlantedEvent((PlantedEvent) event) );
+        if(type == EventType.planted){
+            for(Event event : events.events){
+                reactions.add( handlePlantedEvent((PlantedEvent) event) );
+            }
         }
-        else if( event.is(EventType.died) ){
-            reactions.add( handleDiedEvent((DiedEvent) event) );
+        else if( type == EventType.died ){
+            for(Event event: events.events){
+                reactions.add( handleDiedEvent((DiedEvent) event) );
+            }
         }
         else{
-            reactions.add( handleLayerUniqueEvents(event) );
+            reactions.add(handleLayerUniqueEvents(events));
         }
         return reactions;
     }
 
     protected Events handlePlantedEvent(PlantedEvent event){
-        plantEntity( event.pos );
+        if(event.layer.matches(getLayerAddress())){
+            plantEntity( event.pos );
+        }
         return null;
     }
 
@@ -51,7 +61,13 @@ public abstract class Layer {
         return new FullAddress(address,entityAddress);
     }
 
+    public LayerAddress getLayerAddress(){
+        return address;
+    }
+
+    public abstract Grid getGridRepresentation();
+
     protected abstract void plantEntity(Position pos);
     protected abstract void killEntity(EntityAddress entityAddress);
-    protected abstract Events handleLayerUniqueEvents(Event event);
+    protected abstract Events handleLayerUniqueEvents(Events events);
 }
