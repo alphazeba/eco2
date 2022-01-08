@@ -1,0 +1,19 @@
+
+
+
+current goals
+- add in the simulator type stuff
+- first goal is to add in the grass layer but with forethought
+    over how the rest of the program will work.
+- add in the event system.
+    - one of the events will be "planted" this will be how the
+        grass spreads
+    - the planted event should have a source, the position
+        being planted and the type of things being planted.
+        - the type of thing being planted will probably be
+            just a layer.
+
+
+-- i think that the basic event system necessary to make the grass layer works is done.
+-- now i just need to make a function for drawing the grass layer and then hook up the main thing to continuously
+  - ask the layers for their decisions and then handle the decisions.
