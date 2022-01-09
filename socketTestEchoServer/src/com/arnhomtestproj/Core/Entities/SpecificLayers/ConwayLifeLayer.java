@@ -65,7 +65,6 @@ public class ConwayLifeLayer extends GridBasedLayer {
         return new PlantedEvent(getFullAddressOfPosition(pos),pos, getLayerAddress());
     }
 
-
     private boolean cellAlive(Position pos){
         return grid.hasAValue(pos);
     }

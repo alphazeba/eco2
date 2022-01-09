@@ -1,10 +1,10 @@
 package com.arnhomtestproj.Core.Entities.Data;
 
-public class GridCell {
+public class GridCell<T> {
     private Position pos;
-    private int content;
+    private T content;
 
-    public GridCell(Position pos, int content){
+    public GridCell(Position pos, T content){
         this.pos = pos;
         this.content = content;
     }
@@ -13,7 +13,7 @@ public class GridCell {
         return pos;
     }
 
-    public int getContent(){
+    public T getContent(){
         return content;
     }
 }

@@ -9,7 +9,7 @@ import com.arnhomtestproj.Core.Entities.Layer;
 
 public abstract class GridBasedLayer extends Layer {
 
-    protected Grid grid;
+    protected Grid<Integer> grid;
 
     public GridBasedLayer(String name){
         super(name);
@@ -17,12 +17,12 @@ public abstract class GridBasedLayer extends Layer {
 
     @Override
     public void setWorldContext(WorldContext world){
-        grid = new Grid(world.size.getX(), world.size.getY());
+        grid = new Grid<>(world.size.getX(), world.size.getY(),0);
     }
 
     @Override
     protected void plantEntity(Position pos) {
-        grid.add(pos,1);
+        grid.set(pos,1);
     }
 
     @Override
@@ -45,7 +45,7 @@ public abstract class GridBasedLayer extends Layer {
         return new EntityAddress(coord);
     }
 
-    public Grid getGridRepresentation(){
+    public Grid<Integer> getGridRepresentation(){
         return grid;
     }
 
